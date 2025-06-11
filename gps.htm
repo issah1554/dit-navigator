@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Campus Route Finder</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map { height: 90vh; }
+    #controls {
+      padding: 10px;
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <label for="start">Start:</label>
+    <select id="start"></select>
+
+    <label for="end">End:</label>
+    <select id="end"></select>
+
+    <button onclick="findPath()">Find Route</button>
+  </div>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([-1.9501, 30.0589], 17);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const locations = {
+      A: { name: "Admin Block", latlng: [-1.9501, 30.0589] },
+      B: { name: "Library", latlng: [-1.9506, 30.0593] },
+      C: { name: "Lecture Hall", latlng: [-1.9509, 30.0582] },
+      D: { name: "Dorm", latlng: [-1.9512, 30.0587] },
+      E: { name: "Cafeteria", latlng: [-1.9510, 30.0595] },
+      F: { name: "Sports Field", latlng: [-1.9495, 30.0583] }
+    };
+
+    const graph = {
+      A: { B: 50, C: 40, F: 70 },
+      B: { A: 50, D: 60, E: 40 },
+      C: { A: 40, D: 30, F: 50 },
+      D: { B: 60, C: 30, E: 20 },
+      E: { B: 40, D: 20 },
+      F: { A: 70, C: 50 }
+    };
+
+    let routeLine = null;
+
+    // Add markers
+    for (let key in locations) {
+      const loc = locations[key];
+      L.marker(loc.latlng).addTo(map).bindPopup(`${key}: ${loc.name}`);
+    }
+
+    // Populate dropdowns
+    const startSelect = document.getElementById('start');
+    const endSelect = document.getElementById('end');
+    for (let key in locations) {
+      const optionStart = document.createElement('option');
+      optionStart.value = key;
+      optionStart.textContent = `${key} - ${locations[key].name}`;
+      startSelect.appendChild(optionStart);
+
+      const optionEnd = optionStart.cloneNode(true);
+      endSelect.appendChild(optionEnd);
+    }
+
+    // Dijkstra's Algorithm
+    function dijkstra(start, end) {
+      const distances = {}, visited = {}, prev = {}, pq = new Set(Object.keys(graph));
+
+      for (let v of pq) distances[v] = Infinity;
+      distances[start] = 0;
+
+      while (pq.size) {
+        let u = [...pq].reduce((a, b) => distances[a] < distances[b] ? a : b);
+        pq.delete(u);
+
+        if (u === end) break;
+
+        for (let neighbor in graph[u]) {
+          if (!pq.has(neighbor)) continue;
+          let alt = distances[u] + graph[u][neighbor];
+          if (alt < distances[neighbor]) {
+            distances[neighbor] = alt;
+            prev[neighbor] = u;
+          }
+        }
+      }
+
+      let path = [], u = end;
+      while (u) {
+        path.unshift(u);
+        u = prev[u];
+      }
+      return path;
+    }
+
+    function findPath() {
+      const start = startSelect.value;
+      const end = endSelect.value;
+
+      if (start === end) {
+        alert("Start and end must be different.");
+        return;
+      }
+
+      const path = dijkstra(start, end);
+      if (path.length === 0) {
+        alert("No path found.");
+        return;
+      }
+
+      const coords = path.map(k => locations[k].latlng);
+
+      if (routeLine) map.removeLayer(routeLine);
+      routeLine = L.polyline(coords, { color: 'blue', weight: 5 }).addTo(map);
+      routeLine.bindPopup(`Shortest Path: ${path.join(' → ')}`).openPopup();
+    }
+  </script>
+</body>
+</html>
