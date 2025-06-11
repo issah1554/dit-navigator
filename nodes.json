@@ -5,8 +5,8 @@
       -6.815386735,
       39.27961066
     ],
-    "description": "Located on floor 0",
-    "floor": "0"
+    "description": "Located on floor ",
+    "floor": ""
   },
   "GATE-2": {
     "name": "Gate recency",
@@ -14,8 +14,8 @@
       -6.814144779,
       39.27941482
     ],
-    "description": "Located on floor 0",
-    "floor": "0"
+    "description": "Located on floor ",
+    "floor": ""
   },
   "GATE-3": {
     "name": "Gate la canteen",
@@ -23,8 +23,8 @@
       -6.815135409,
       39.2806738
     ],
-    "description": "Located on floor 0",
-    "floor": "0"
+    "description": "Located on floor ",
+    "floor": ""
   },
   "JCT-1": {
     "name": "stationary juction",
@@ -32,8 +32,8 @@
       -6.815157685,
       39.27976058
     ],
-    "description": "Located on floor 0",
-    "floor": "0"
+    "description": "Located on floor ",
+    "floor": ""
   },
   "JCT-2": {
     "name": "w7 junction",
@@ -41,17 +41,17 @@
       -6.815005683,
       39.28009578
     ],
-    "description": "Located on floor 0",
-    "floor": "0"
+    "description": "Located on floor ",
+    "floor": ""
   },
   "JCT-3": {
-    "name": "block A junction",
+    "name": "Block-A junction",
     "latlng": [
       -6.814937545,
       39.27964444
     ],
-    "description": "Located on floor 0",
-    "floor": "0"
+    "description": "Located on floor ",
+    "floor": ""
   },
   "JCT-4": {
     "name": "heritage juction",
@@ -59,26 +59,26 @@
       -6.814796026,
       39.28028845
     ],
-    "description": "Located on floor 0",
-    "floor": "0"
+    "description": "Located on floor ",
+    "floor": ""
   },
   "JCT-5": {
-    "name": "block c juction",
+    "name": "Block-c juction",
     "latlng": [
       -6.81524941,
       39.28020927
     ],
-    "description": "Located on floor 0",
-    "floor": "0"
+    "description": "Located on floor ",
+    "floor": ""
   },
-  "LL": {
+  "Block-Library": {
     "name": "library",
     "latlng": [
       -6.815115753,
       39.27962227
     ],
-    "description": "Located on floor 0",
-    "floor": "0"
+    "description": "Located on floor ",
+    "floor": ""
   },
   "Main Library": {
     "name": "VENUE-MAIN-LIB",
@@ -260,8 +260,8 @@
     "description": "Located on floor 9",
     "floor": "9"
   },
-  "block A": {
-    "name": "block A",
+  "Block-A": {
+    "name": "Block-A",
     "latlng": [
       -6.81502927,
       39.27932033
@@ -404,8 +404,8 @@
     "description": "Located on floor ",
     "floor": ""
   },
-  "block B": {
-    "name": "block B",
+  "Block-B": {
+    "name": "Block-B",
     "latlng": [
       -6.815380969,
       39.27993583
@@ -476,8 +476,8 @@
     "description": "Located on floor 5",
     "floor": "5"
   },
-  "Block C": {
-    "name": "Block C",
+  "Block-C": {
+    "name": "Block-C",
     "latlng": [
       -6.815559702,
       39.28031907
@@ -593,8 +593,8 @@
     "description": "Located on floor 2",
     "floor": "2"
   },
-  "vimbeta vya D": {
-    "name": "VIMB-D",
+  "VIMB-D": {
+    "name": "vimbeta vya D",
     "latlng": [
       -6.814354698,
       39.27981389
@@ -701,8 +701,8 @@
     "description": "Located on floor 2",
     "floor": "2"
   },
-  "Block 2": {
-    "name": "DOM-Block 2",
+  "Block-2": {
+    "name": "DOM-Block-2",
     "latlng": [
       -6.813651298,
       39.27963969
@@ -710,8 +710,8 @@
     "description": "Located on floor ",
     "floor": ""
   },
-  "Block 3": {
-    "name": "DOM-Block 3",
+  "Block-3": {
+    "name": "DOM-Block-3",
     "latlng": [
       -6.813645532,
       39.28012745
@@ -719,8 +719,8 @@
     "description": "Located on floor ",
     "floor": ""
   },
-  "block 1": {
-    "name": "DOM-block 1",
+  "Block-1": {
+    "name": "DOM-Block-1",
     "latlng": [
       -6.813951108,
       39.27960776
@@ -728,8 +728,8 @@
     "description": "Located on floor ",
     "floor": ""
   },
-  "block 4": {
-    "name": "DOM-block 4",
+  "Block-4": {
+    "name": "DOM-Block-4",
     "latlng": [
       -6.813290949,
       39.28020003
@@ -746,7 +746,7 @@
     "description": "Located on floor ",
     "floor": ""
   },
-  "DH -1": {
+  "DH-1": {
     "name": "VENUE-DH-1",
     "latlng": [
       -6.813247707,
@@ -755,7 +755,7 @@
     "description": "Located on floor 1",
     "floor": "1"
   },
-  "DH -2": {
+  "DH-2": {
     "name": "VENUE-DH-2",
     "latlng": [
       -6.813247707,
@@ -764,7 +764,7 @@
     "description": "Located on floor 2",
     "floor": "2"
   },
-  "DH -3": {
+  "DH-3": {
     "name": "VENUE-DH-3",
     "latlng": [
       -6.813247707,
@@ -773,7 +773,7 @@
     "description": "Located on floor 3",
     "floor": "3"
   },
-  "DH -4": {
+  "DH-4": {
     "name": "VENUE-DH-4",
     "latlng": [
       -6.813247707,
@@ -782,7 +782,7 @@
     "description": "Located on floor 4",
     "floor": "4"
   },
-  "DH -5": {
+  "DH-5": {
     "name": "VENUE-DH-5",
     "latlng": [
       -6.813247707,
@@ -791,7 +791,7 @@
     "description": "Located on floor 5",
     "floor": "5"
   },
-  "DH -6": {
+  "DH-6": {
     "name": "VENUE-DH-6",
     "latlng": [
       -6.813247707,
@@ -800,7 +800,7 @@
     "description": "Located on floor 6",
     "floor": "6"
   },
-  "DH -7": {
+  "DH-7": {
     "name": "VENUE-DH-7",
     "latlng": [
       -6.813247707,
@@ -809,7 +809,7 @@
     "description": "Located on floor 7",
     "floor": "7"
   },
-  "DH -8": {
+  "DH-8": {
     "name": "VENUE-DH-8",
     "latlng": [
       -6.813247707,
@@ -935,7 +935,7 @@
     "description": "Located on floor ",
     "floor": ""
   },
-  "vimbeta vya block C": {
+  "vimbeta vya Block-C": {
     "name": "VIMB-C",
     "latlng": [
       -6.81565824,
@@ -944,7 +944,7 @@
     "description": "Located on floor ",
     "floor": ""
   },
-  "electrical workshop": {
+  "Electrical Workshop": {
     "name": "VENUE-electrical workshop",
     "latlng": [
       -6.815341134,
