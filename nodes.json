@@ -1,0 +1,758 @@
+{
+  "GATE-1": {
+    "name": "Main gate",
+    "latlng": [
+      -6.815356138266235,
+      39.27959864146474
+    ],
+    "description": "Located on floor 0",
+    "floor": "0"
+  },
+  "GATE-2": {
+    "name": "Regency Gate",
+    "latlng": [
+      -6.814106064,
+      39.27942925
+    ],
+    "description": "Located on floor 0",
+    "floor": "0"
+  },
+  "GATE-3": {
+    "name": "Canteen Gate",
+    "latlng": [
+      -6.815121061,
+      39.28068384
+    ],
+    "description": "Located on floor 0",
+    "floor": "0"
+  },
+  "JCT-1": {
+    "name": "DIT stationery Junction",
+    "latlng": [
+      -6.8151278321305595,
+      39.27977239064541
+    ],
+    "description": "Located on floor 0",
+    "floor": "0"
+  },
+  "JCT-2": {
+    "name": "w7 Junction",
+    "latlng": [
+      -6.814919195850485,
+      39.27994502971946
+    ],
+    "description": "Located on floor 0",
+    "floor": "0"
+  },
+  "VENUE-MAIN-LIB": {
+    "name": "Main Library",
+    "latlng": [
+      -6.815192416109353,
+      39.279428397334335
+    ],
+    "description": "Located on floor G",
+    "floor": "G"
+  },
+  "VENUE-LIB-1": {
+    "name": "Library 1",
+    "latlng": [
+      -6.815136487713633,
+      39.27958865932418
+    ],
+    "description": "Located on floor G",
+    "floor": "G"
+  },
+  "VENUE-LIB-2": {
+    "name": "Library 2",
+    "latlng": [
+      -6.815136487713633,
+      39.27958865932418
+    ],
+    "description": "Located on floor 1",
+    "floor": "1"
+  },
+  "VENUE-LIB-3": {
+    "name": "Library 3",
+    "latlng": [
+      -6.815180431451997,
+      39.27943309119805
+    ],
+    "description": "Located on floor 1",
+    "floor": "1"
+  },
+  "VENUE-A10": {
+    "name": "A10",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 3",
+    "floor": "3"
+  },
+  "VENUE-A11": {
+    "name": "A11",
+    "latlng": [
+      -6.814940072467323,
+      39.27918766907239
+    ],
+    "description": "Located on floor 3",
+    "floor": "3"
+  },
+  "VENUE-A2": {
+    "name": "A2",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 1",
+    "floor": "1"
+  },
+  "VENUE-A3": {
+    "name": "A3",
+    "latlng": [
+      -6.815026628347238,
+      39.27933653167585
+    ],
+    "description": "Located on floor 1",
+    "floor": "1"
+  },
+  "VENUE-A5": {
+    "name": "A5",
+    "latlng": [
+      -6.814940072467323,
+      39.27918766907239
+    ],
+    "description": "Located on floor 1",
+    "floor": "1"
+  },
+  "VENUE-A6": {
+    "name": "A6",
+    "latlng": [
+      -6.814885870626694,
+      39.27911364650704
+    ],
+    "description": "Located on floor 2",
+    "floor": "2"
+  },
+  "VENUE-A7": {
+    "name": "A7",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 2",
+    "floor": "2"
+  },
+  "VENUE-A8": {
+    "name": "A8",
+    "latlng": [
+      -6.814940072467323,
+      39.27918766907239
+    ],
+    "description": "Located on floor 2",
+    "floor": "2"
+  },
+  "VENUE-A9": {
+    "name": "A9",
+    "latlng": [
+      -6.814734064923925,
+      39.27887224769062
+    ],
+    "description": "Located on floor 3",
+    "floor": "3"
+  },
+  "VENUE-ASA": {
+    "name": "ASA",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 1",
+    "floor": "1"
+  },
+  "VENUE-B10": {
+    "name": "B10",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 5",
+    "floor": "5"
+  },
+  "VENUE-B11": {
+    "name": "B11",
+    "latlng": [
+      -6.814940072467323,
+      39.27918766907239
+    ],
+    "description": "Located on floor 5",
+    "floor": "5"
+  },
+  "VENUE-B12": {
+    "name": "B12",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 5",
+    "floor": "5"
+  },
+  "VENUE-B14": {
+    "name": "B14",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 5",
+    "floor": "5"
+  },
+  "VENUE-B15": {
+    "name": "B15",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 5",
+    "floor": "5"
+  },
+  "VENUE-B9": {
+    "name": "B9",
+    "latlng": [
+      -6.814734064923925,
+      39.27887224769062
+    ],
+    "description": "Located on floor 5",
+    "floor": "5"
+  },
+  "VENUE-C1": {
+    "name": "C1",
+    "latlng": [
+      -6.814885870626694,
+      39.27911364650704
+    ],
+    "description": "Located on floor 1",
+    "floor": "1"
+  },
+  "VENUE-C2": {
+    "name": "C2",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 2",
+    "floor": "2"
+  },
+  "VENUE-CEITT1/C1": {
+    "name": "CEITT1/C1",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 1",
+    "floor": "1"
+  },
+  "VENUE-CEITT1/C2": {
+    "name": "CEITT1/C2",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 2",
+    "floor": "2"
+  },
+  "VENUE-CEITT3/C7": {
+    "name": "CEITT3/C7",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 3",
+    "floor": "3"
+  },
+  "VENUE-CEITT3/C8": {
+    "name": "CEITT3/C8",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 3",
+    "floor": "3"
+  },
+  "VENUE-CEITT4-C8": {
+    "name": "CEITT4-C8",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 4",
+    "floor": "4"
+  },
+  "VENUE-CEITT4-C9": {
+    "name": "CEITT4-C9",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 4",
+    "floor": "4"
+  },
+  "VENUE-CEITT5-C5": {
+    "name": "CEITT5-C5",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 5",
+    "floor": "5"
+  },
+  "VENUE-D2": {
+    "name": "D2",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 2",
+    "floor": "2"
+  },
+  "VENUE-D3": {
+    "name": "D3",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 3",
+    "floor": "3"
+  },
+  "VENUE-DH-1": {
+    "name": "DH -1",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 1",
+    "floor": "1"
+  },
+  "VENUE-DH-2": {
+    "name": "DH -2",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 2",
+    "floor": "2"
+  },
+  "VENUE-DH-3": {
+    "name": "DH -3",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 3",
+    "floor": "3"
+  },
+  "VENUE-DH-4": {
+    "name": "DH -4",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 4",
+    "floor": "4"
+  },
+  "VENUE-DH-5": {
+    "name": "DH -5",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 5",
+    "floor": "5"
+  },
+  "VENUE-DH-6": {
+    "name": "DH -6",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 6",
+    "floor": "6"
+  },
+  "VENUE-DH-7": {
+    "name": "DH -7",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 7",
+    "floor": "7"
+  },
+  "VENUE-DH-8": {
+    "name": "DH-8",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 8",
+    "floor": "8"
+  },
+  "VENUE-L1": {
+    "name": "L1",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 1",
+    "floor": "1"
+  },
+  "VENUE-L2": {
+    "name": "L2",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 2",
+    "floor": "2"
+  },
+  "VENUE-L3": {
+    "name": "L3",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 3",
+    "floor": "3"
+  },
+  "VENUE-L4": {
+    "name": "L4",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 4",
+    "floor": "4"
+  },
+  "VENUE-L5": {
+    "name": "L5",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 5",
+    "floor": "5"
+  },
+  "VENUE-L6": {
+    "name": "L6",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 6",
+    "floor": "6"
+  },
+  "VENUE-MULT-LAB-1": {
+    "name": "Mult. Lab 1",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 1",
+    "floor": "1"
+  },
+  "VENUE-R1-1": {
+    "name": "R1-1",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 1",
+    "floor": "1"
+  },
+  "VENUE-R1-2": {
+    "name": "R1-2",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 2",
+    "floor": "2"
+  },
+  "VENUE-R2-1": {
+    "name": "R2-1",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 1",
+    "floor": "1"
+  },
+  "VENUE-R2-2": {
+    "name": "R2-2",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 2",
+    "floor": "2"
+  },
+  "VENUE-RG-1": {
+    "name": "RG-1",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 1",
+    "floor": "1"
+  },
+  "VENUE-RG-2": {
+    "name": "RG-2",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 2",
+    "floor": "2"
+  },
+  "VENUE-T10-2": {
+    "name": "T10-2",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 2",
+    "floor": "2"
+  },
+  "VENUE-TT-BASEMENT": {
+    "name": "TT-Basement",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor B",
+    "floor": "B"
+  },
+  "VENUE-TT-M-1": {
+    "name": "TT-M-1",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 1",
+    "floor": "1"
+  },
+  "VENUE-TT-M-2": {
+    "name": "TT-M-2",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 2",
+    "floor": "2"
+  },
+  "VENUE-TT10-1-1": {
+    "name": "TT10-1-1",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 1",
+    "floor": "1"
+  },
+  "VENUE-TT10-1-2": {
+    "name": "TT10-1-2",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 2",
+    "floor": "2"
+  },
+  "VENUE-TT3-1": {
+    "name": "TT3-1",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 3",
+    "floor": "3"
+  },
+  "VENUE-TT4-1": {
+    "name": "TT4-1",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 4",
+    "floor": "4"
+  },
+  "VENUE-TT4-2": {
+    "name": "TT4-2",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 4",
+    "floor": "4"
+  },
+  "VENUE-TT5-1": {
+    "name": "TT5-1",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 5",
+    "floor": "5"
+  },
+  "VENUE-TT5-2": {
+    "name": "TT5-2",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 5",
+    "floor": "5"
+  },
+  "VENUE-TT8-1": {
+    "name": "TT8-1",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 8",
+    "floor": "8"
+  },
+  "VENUE-TT8-2": {
+    "name": "TT8-2",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 8",
+    "floor": "8"
+  },
+  "VENUE-TT8-3": {
+    "name": "TT8-3",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 8",
+    "floor": "8"
+  },
+  "VENUE-TT9-1": {
+    "name": "TT9-1",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 9",
+    "floor": "9"
+  },
+  "VENUE-W11": {
+    "name": "W11",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 1",
+    "floor": "1"
+  },
+  "VENUE-W15-1": {
+    "name": "W15-1",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 1",
+    "floor": "1"
+  },
+  "VENUE-W15-2": {
+    "name": "W15-2",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 2",
+    "floor": "2"
+  },
+  "VENUE-W16-1": {
+    "name": "W16-1",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 1",
+    "floor": "1"
+  },
+  "VENUE-W16-3": {
+    "name": "W16-3",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 3",
+    "floor": "3"
+  },
+  "VENUE-W5": {
+    "name": "W5",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 5",
+    "floor": "5"
+  },
+  "VENUE-W6": {
+    "name": "W6",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 6",
+    "floor": "6"
+  },
+  "VENUE-W7F": {
+    "name": "W7F",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 7",
+    "floor": "7"
+  },
+  "VENUE-W7R": {
+    "name": "W7R",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 7",
+    "floor": "7"
+  },
+  "VENUE-W8F": {
+    "name": "W8F",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 8",
+    "floor": "8"
+  },
+  "VENUE-W8R": {
+    "name": "W8R",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 8",
+    "floor": "8"
+  },
+  "VENUE-W9F": {
+    "name": "W9F",
+    "latlng": [
+      -6.814990674368246,
+      39.27926813534453
+    ],
+    "description": "Located on floor 9",
+    "floor": "9"
+  }
+}
