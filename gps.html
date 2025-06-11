@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Campus Route Finder</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <!-- Leaflet Routing Machine CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+
+  <!-- Bootstrap CSS (v5) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div id="map"></div>
+
+  <div class="controls-box">
+    <h5 class="mb-3 text-center">
+      <i class="fas fa-map-marked-alt me-2"></i>Campus Route Finder
+    </h5>
+    <div class="mb-3">
+      <label for="start" class="form-label"><i class="fas fa-map-marker-alt me-1"></i> Start Location</label>
+      <select id="start" class="form-select">
+        <option value="" disabled selected>Select starting point</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="end" class="form-label"><i class="fas fa-flag me-1"></i> Destination</label>
+      <select id="end" class="form-select">
+        <option value="" disabled selected>Select destination</option>
+      </select>
+    </div>
+    <button class="btn btn-primary w-100" onclick="findPath()">
+      <i class="fas fa-route me-2"></i>Find Route
+    </button>
+    <button class="btn btn-outline-secondary w-100 mt-2" onclick="clearRoute()">
+      <i class="fas fa-times me-2"></i>Clear Route
+    </button>
+  </div>
+
+  <div class="info-panel">
+    <h6 class="mb-2">
+      <i class="fas fa-info-circle me-1"></i> Route Information
+    </h6>
+    <p class="path-info mb-1">
+      <strong>Distance:</strong> <span id="distance">-</span> meters
+    </p>
+    <p class="path-info"><strong>Path:</strong></p>
+    <ol class="path-steps" id="path-steps"></ol>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-color start-icon"></div>
+      <span>Start Point</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color end-icon"></div>
+      <span>End Point</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background-color: #4a90e2"></div>
+      <span>Route</span>
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!-- Leaflet Routing Machine JS -->
+  <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+
+  <script>
+    const map = L.map("map", {
+      zoomControl: false, // Disable the default zoom control
+    }).setView([-1.9501, 30.0589], 17);
+
+    // Add customized zoom control later if needed
+    L.control.zoom({
+      position: "topright",
+      zoomInText: "+", 
+      zoomOutText: "-", 
+      zoomInTitle: "Zoom in", 
+      zoomOutTitle: "Zoom out",
+    }).addTo(map);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+
+    const locations = {
+      A: {
+        name: "Admin Block",
+        latlng: [-1.9501, 30.0589],
+        description: "Main administration building with offices",
+      },
+      B: {
+        name: "Library",
+        latlng: [-1.9506, 30.0593],
+        description: "Central library with study spaces",
+      },
+      C: {
+        name: "Lecture Hall",
+        latlng: [-1.9509, 30.0582],
+        description: "Main lecture theater complex",
+      },
+      D: {
+        name: "Dormitory",
+        latlng: [-1.9512, 30.0587],
+        description: "Student residence halls",
+      },
+      E: {
+        name: "Cafeteria",
+        latlng: [-1.951, 30.0595],
+        description: "Main dining area and food court",
+      },
+      F: {
+        name: "Sports Field",
+        latlng: [-1.9495, 30.0583],
+        description: "Athletic fields and gymnasium",
+      },
+    };
+
+    const graph = {
+      A: { B: 50, C: 40, F: 70 },
+      B: { A: 50, D: 60, E: 40 },
+      C: { A: 40, D: 30, F: 50 },
+      D: { B: 60, C: 30, E: 20 },
+      E: { B: 40, D: 20 },
+      F: { A: 70, C: 50 },
+    };
+
+    let routeLine = null;
+    let startMarker = null;
+    let endMarker = null;
+    let markers = {};
+
+    // Custom icon creation function
+    function createMarkerIcon(className, letter) {
+      return L.divIcon({
+        className: "marker-icon " + className,
+        html: letter,
+        iconSize: [24, 24],
+      });
+    }
+
+    // Add markers with custom icons
+    for (let key in locations) {
+      const loc = locations[key];
+      markers[key] = L.marker(loc.latlng, {
+        icon: createMarkerIcon("", key),
+      }).addTo(map).bindPopup(`
+        <b>${key}: ${loc.name}</b><br>
+        <small>${loc.description}</small>
+      `);
+    }
+
+    // Populate dropdowns
+    const startSelect = document.getElementById("start");
+    const endSelect = document.getElementById("end");
+
+    for (let key in locations) {
+      const loc = locations[key];
+      const optionStart = document.createElement("option");
+      optionStart.value = key;
+      optionStart.textContent = `${key} - ${loc.name}`;
+      startSelect.appendChild(optionStart);
+
+      const optionEnd = optionStart.cloneNode(true);
+      endSelect.appendChild(optionEnd);
+    }
+
+    // Dijkstra's Algorithm with path tracking
+    function dijkstra(start, end) {
+      const distances = {},
+        visited = {},
+        prev = {},
+        pq = new Set(Object.keys(graph));
+      let totalDistance = 0;
+
+      for (let v of pq) distances[v] = Infinity;
+      distances[start] = 0;
+
+      while (pq.size) {
+        let u = [...pq].reduce((a, b) =>
+          distances[a] < distances[b] ? a : b
+        );
+        pq.delete(u);
+
+        if (u === end) {
+          totalDistance = distances[u];
+          break;
+        }
+
+        for (let neighbor in graph[u]) {
+          if (!pq.has(neighbor)) continue;
+          let alt = distances[u] + graph[u][neighbor];
+          if (alt < distances[neighbor]) {
+            distances[neighbor] = alt;
+            prev[neighbor] = u;
+          }
+        }
+      }
+
+      let path = [],
+        u = end;
+      while (u) {
+        path.unshift(u);
+        u = prev[u];
+      }
+
+      return {
+        path: path,
+        distance: totalDistance,
+      };
+    }
+
+    function findPath() {
+      const start = startSelect.value;
+      const end = endSelect.value;
+
+      if (!start || !end) {
+        alert("Please select both start and end locations.");
+        return;
+      }
+
+      if (start === end) {
+        alert("Start and end locations must be different.");
+        return;
+      }
+
+      // Clear previous route and markers
+      clearRoute();
+
+      // Calculate path
+      const result = dijkstra(start, end);
+      const path = result.path;
+      const distance = result.distance;
+
+      if (path.length === 0) {
+        alert("No path found between these locations.");
+        return;
+      }
+
+      // Update markers for start and end points
+      markers[start].setIcon(createMarkerIcon("start-icon", start));
+      markers[end].setIcon(createMarkerIcon("end-icon", end));
+
+      // Create polyline from path
+      const coords = path.map((k) => locations[k].latlng);
+      routeLine = L.polyline(coords, {
+        color: "#4a90e2",
+        weight: 5,
+        opacity: 0.8,
+        dashArray: "5, 5",
+        lineJoin: "round",
+      }).addTo(map);
+
+      // Fit bounds to show entire route
+      map.fitBounds(routeLine.getBounds(), { padding: [50, 50] });
+
+      // Show route information
+      document.getElementById("distance").textContent = distance;
+      const pathSteps = document.getElementById("path-steps");
+      pathSteps.innerHTML = "";
+
+      path.forEach((point, index) => {
+        const li = document.createElement("li");
+        li.textContent = `${point} - ${locations[point].name}`;
+        pathSteps.appendChild(li);
+      });
+
+      document.querySelector(".info-panel").style.display = "block";
+    }
+
+    function clearRoute() {
+      if (routeLine) {
+        map.removeLayer(routeLine);
+        routeLine = null;
+      }
+
+      // Reset all markers to default
+      for (let key in markers) {
+        markers[key].setIcon(createMarkerIcon("", key));
+      }
+
+      // Reset dropdowns
+      startSelect.selectedIndex = 0;
+      endSelect.selectedIndex = 0;
+
+      // Hide info panel
+      document.querySelector(".info-panel").style.display = "none";
+    }
+
+    // Add click event to info panel header to toggle it
+    document
+      .querySelector(".info-panel h6")
+      .addEventListener("click", function () {
+        const panel = this.parentElement;
+        panel.style.display =
+          panel.style.display === "none" ? "block" : "none";
+      });
+  </script>
+</body>
+
+</html>

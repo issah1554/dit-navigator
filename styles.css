@@ -1,0 +1,152 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#map {
+  height: 100vh;
+  width: 100vw;
+}
+
+.controls-box {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 1.2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  max-width: 350px;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+  font-weight: 500;
+  color: #333;
+}
+
+.form-select {
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  transition: all 0.2s;
+}
+
+.form-select:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 0.25rem rgba(74, 144, 226, 0.25);
+}
+
+.btn-primary {
+  background-color: #4a90e2;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  margin-top: 0.5rem;
+}
+
+.btn-primary:hover {
+  background-color: #3a7bc8;
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.info-panel {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  max-width: 350px;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  display: none;
+}
+
+.path-info {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.path-steps {
+  margin-top: 0.5rem;
+  padding-left: 1rem;
+}
+
+.path-steps li {
+  margin-bottom: 0.3rem;
+  font-size: 0.85rem;
+}
+
+.marker-icon {
+  background-color: #4a90e2;
+  border-radius: 50%;
+  border: 2px solid white;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 0.7rem;
+}
+
+.start-icon {
+  background-color: #4CAF50;
+}
+
+.end-icon {
+  background-color: #F44336;
+}
+
+.legend {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 0.8rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 0.8rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.3rem;
+}
+
+.legend-color {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  .controls-box {
+    max-width: calc(100vw - 40px);
+  }
+  .info-panel {
+    max-width: calc(100vw - 40px);
+  }
+}
+
+
