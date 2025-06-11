@@ -1,5 +1,6 @@
 import csv
 from collections import defaultdict
+import json
 
 
 def convert_edges_to_graph(csv_file):
@@ -20,23 +21,16 @@ def convert_edges_to_graph(csv_file):
     return dict(graph)
 
 
-def format_as_js(graph):
-    js_lines = []
-    js_lines.append("const graph = {")
-
-    for node, connections in graph.items():
-        connections_str = ", ".join(f'"{k}": {v}' for k, v in connections.items())
-        js_lines.append(f'  "{node}": {{{connections_str}}},')
-
-    js_lines.append("};")
-    return "\n".join(js_lines)
+def save_as_json(graph, output_file):
+    with open(output_file, "w") as f:
+        json.dump(graph, f, indent=2)
 
 
-# Example usage:
-graph = convert_edges_to_graph("edges.csv")
-js_code = format_as_js(graph)
-# print(js_code)
+if __name__ == "__main__":
+    # Convert CSV to graph structure
+    graph = convert_edges_to_graph("edges.csv")
 
-# To save to a file:
-with open("graph.js", "w") as f:
-    f.write(js_code)
+    # Save as JSON file
+    save_as_json(graph, "graph.json")
+
+    print("Successfully generated graph.json")

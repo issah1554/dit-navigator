@@ -77,11 +77,17 @@
   <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 
   <script>
+    // Initialize map
     const map = L.map("map", {
-      zoomControl: false, // Disable the default zoom control
-    }).setView([   -6.814990674368246, 39.27926813534453], 17);
+      zoomControl: false,
+    }).setView([-6.814990674368246, 39.27926813534453], 17);
   
-    // Add customized zoom control later if needed
+    // Add tile layer
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+  
+    // Add zoom control
     L.control.zoom({
       position: "bottomleft",
       zoomInText: "+",
@@ -90,200 +96,197 @@
       zoomOutTitle: "Zoom out",
     }).addTo(map);
   
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
+    // Load both data files
+    Promise.all([
+      fetch('nodes.json').then(r => r.json()),
+      fetch('graph.json').then(r => r.json())
+    ])
+    .then(([locations, graph]) => {
+      console.log("Data loaded:", {locations, graph});
   
-    // First, make sure your nodes.json is accessible via URL or in your public folder
-    fetch('nodes.json')
-      .then(response => response.json())
-      .then(locations => {
-        console.log("Locations loaded:", locations);
+      let routeLine = null;
+      let markers = {};
   
-        const graph = {
-          A: { B: 50, C: 40, F: 70 },
-          B: { A: 50, D: 60, E: 40 },
-          C: { A: 40, D: 30, F: 50 },
-          D: { B: 60, C: 30, E: 20 },
-          E: { B: 40, D: 20 },
-          F: { A: 70, C: 50 },
+      // Custom icon creation function
+      function createMarkerIcon(className, letter) {
+        return L.divIcon({
+          className: "marker-icon " + className,
+          html: letter,
+          iconSize: [24, 24],
+        });
+      }
+  
+      // Add markers
+      for (let key in locations) {
+        const loc = locations[key];
+        markers[key] = L.marker(loc.latlng, {
+          icon: createMarkerIcon("", key),
+        }).addTo(map).bindPopup(`
+          <b>${key}: ${loc.name}</b><br>
+          <small>${loc.description}</small>
+        `);
+      }
+  
+      // Populate dropdowns
+      const startSelect = document.getElementById("start");
+      const endSelect = document.getElementById("end");
+  
+      for (let key in locations) {
+        const loc = locations[key];
+        const option = new Option(`${key} - ${loc.name}`, key);
+        startSelect.add(option);
+        endSelect.add(option.cloneNode(true));
+      }
+  
+      // Dijkstra's Algorithm with path tracking
+      function dijkstra(start, end) {
+        const distances = {};
+        const visited = {};
+        const prev = {};
+        const pq = new PriorityQueue((a, b) => distances[a] < distances[b]);
+        
+        // Initialize distances
+        for (const vertex in graph) {
+          distances[vertex] = Infinity;
+          prev[vertex] = null;
+          pq.enqueue(vertex);
+        }
+        distances[start] = 0;
+  
+        while (!pq.isEmpty()) {
+          const u = pq.dequeue();
+          
+          if (u === end) break;
+          if (distances[u] === Infinity) continue;
+  
+          for (const neighbor in graph[u]) {
+            const alt = distances[u] + graph[u][neighbor];
+            if (alt < distances[neighbor]) {
+              distances[neighbor] = alt;
+              prev[neighbor] = u;
+              pq.enqueue(neighbor);
+            }
+          }
+        }
+  
+        // Reconstruct path
+        const path = [];
+        let u = end;
+        while (prev[u] !== null) {
+          path.unshift(u);
+          u = prev[u];
+        }
+        path.unshift(start);
+  
+        return {
+          path: path,
+          distance: distances[end]
         };
+      }
   
-        let routeLine = null;
-        let markers = {};
-  
-        // Custom icon creation function
-        function createMarkerIcon(className, letter) {
-          return L.divIcon({
-            className: "marker-icon " + className,
-            html: letter,
-            iconSize: [24, 24],
-          });
+      // Simple Priority Queue implementation
+      class PriorityQueue {
+        constructor(comparator = (a, b) => a < b) {
+          this.heap = [];
+          this.comparator = comparator;
         }
   
-        // Add markers with custom icons
-        for (let key in locations) {
-          const loc = locations[key];
-          markers[key] = L.marker(loc.latlng, {
-            icon: createMarkerIcon("", key),
-          }).addTo(map).bindPopup(`
-            <b>${key}: ${loc.name}</b><br>
-            <small>${loc.description}</small>
-          `);
+        enqueue(item) {
+          this.heap.push(item);
+          this.heap.sort((a, b) => this.comparator(a, b) ? -1 : 1);
         }
   
-        // Populate dropdowns
-        const startSelect = document.getElementById("start");
-        const endSelect = document.getElementById("end");
-  
-        for (let key in locations) {
-          const loc = locations[key];
-          const optionStart = document.createElement("option");
-          optionStart.value = key;
-          optionStart.textContent = `${key} - ${loc.name}`;
-          startSelect.appendChild(optionStart);
-  
-          const optionEnd = optionStart.cloneNode(true);
-          endSelect.appendChild(optionEnd);
+        dequeue() {
+          return this.heap.shift();
         }
   
-        // Dijkstra's Algorithm with path tracking
-        function dijkstra(start, end) {
-          const distances = {},
-                visited = {},
-                prev = {},
-                pq = new Set(Object.keys(graph));
-          let totalDistance = 0;
+        isEmpty() {
+          return this.heap.length === 0;
+        }
+      }
   
-          for (let v of pq) distances[v] = Infinity;
-          distances[start] = 0;
+      function findPath() {
+        const start = startSelect.value;
+        const end = endSelect.value;
   
-          while (pq.size) {
-            let u = [...pq].reduce((a, b) =>
-              distances[a] < distances[b] ? a : b
-            );
-            pq.delete(u);
-  
-            if (u === end) {
-              totalDistance = distances[u];
-              break;
-            }
-  
-            for (let neighbor in graph[u]) {
-              if (!pq.has(neighbor)) continue;
-              let alt = distances[u] + graph[u][neighbor];
-              if (alt < distances[neighbor]) {
-                distances[neighbor] = alt;
-                prev[neighbor] = u;
-              }
-            }
-          }
-  
-          let path = [],
-              u = end;
-          while (u) {
-            path.unshift(u);
-            u = prev[u];
-          }
-  
-          return {
-            path: path,
-            distance: totalDistance,
-          };
+        if (!start || !end) {
+          alert("Please select both start and end locations.");
+          return;
         }
   
-        function findPath() {
-          const start = startSelect.value;
-          const end = endSelect.value;
-  
-          if (!start || !end) {
-            alert("Please select both start and end locations.");
-            return;
-          }
-  
-          if (start === end) {
-            alert("Start and end locations must be different.");
-            return;
-          }
-  
-          // Clear previous route and markers
-          clearRoute();
-  
-          // Calculate path
-          const result = dijkstra(start, end);
-          const path = result.path;
-          const distance = result.distance;
-  
-          if (path.length === 0) {
-            alert("No path found between these locations.");
-            return;
-          }
-  
-          // Update markers for start and end points
-          markers[start].setIcon(createMarkerIcon("start-icon", start));
-          markers[end].setIcon(createMarkerIcon("end-icon", end));
-  
-          // Create polyline from path
-          const coords = path.map((k) => locations[k].latlng);
-          routeLine = L.polyline(coords, {
-            color: "#4a90e2",
-            weight: 5,
-            opacity: 0.8,
-            dashArray: "5, 5",
-            lineJoin: "round",
-          }).addTo(map);
-  
-          // Fit bounds to show entire route
-          map.fitBounds(routeLine.getBounds(), { padding: [50, 50] });
-  
-          // Show route information
-          document.getElementById("distance").textContent = distance;
-          const pathSteps = document.getElementById("path-steps");
-          pathSteps.innerHTML = "";
-  
-          path.forEach((point, index) => {
-            const li = document.createElement("li");
-            li.textContent = `${point} - ${locations[point].name}`;
-            pathSteps.appendChild(li);
-          });
-  
-          document.querySelector(".info-panel").style.display = "block";
+        if (start === end) {
+          alert("Start and end locations must be different.");
+          return;
         }
   
-        function clearRoute() {
-          if (routeLine) {
-            map.removeLayer(routeLine);
-            routeLine = null;
-          }
+        // Clear previous route and markers
+        clearRoute();
   
-          // Reset all markers to default
-          for (let key in markers) {
-            markers[key].setIcon(createMarkerIcon("", key));
-          }
+        // Calculate path
+        const result = dijkstra(start, end);
+        const path = result.path;
+        const distance = result.distance;
   
-          // Reset dropdowns
-          startSelect.selectedIndex = 0;
-          endSelect.selectedIndex = 0;
-  
-          // Hide info panel
-          document.querySelector(".info-panel").style.display = "none";
+        if (path.length === 0 || distance === Infinity) {
+          alert("No path found between these locations.");
+          return;
         }
   
-        // Add click event to info panel header to toggle it
-        document
-          .querySelector(".info-panel h6")
-          .addEventListener("click", function () {
-            const panel = this.parentElement;
-            panel.style.display =
-              panel.style.display === "none" ? "block" : "none";
-          });
+        // Update markers for start and end points
+        markers[start].setIcon(createMarkerIcon("start-icon", start));
+        markers[end].setIcon(createMarkerIcon("end-icon", end));
   
-        // Expose findPath to global scope if needed
-        window.findPath = findPath;
-        window.clearRoute = clearRoute;
-      })
-      .catch(error => console.error('Error loading JSON:', error));
-  </script></body>
+        // Create polyline from path
+        const coords = path.map((k) => locations[k].latlng);
+        routeLine = L.polyline(coords, {
+          color: "#4a90e2",
+          weight: 5,
+          opacity: 0.8,
+          dashArray: "5, 5",
+          lineJoin: "round",
+        }).addTo(map);
+  
+        // Fit bounds to show entire route
+        map.fitBounds(routeLine.getBounds(), { padding: [50, 50] });
+  
+        // Show route information
+        document.getElementById("distance").textContent = distance;
+        const pathSteps = document.getElementById("path-steps");
+        pathSteps.innerHTML = "";
+  
+        path.forEach((point) => {
+          const li = document.createElement("li");
+          li.textContent = `${point} - ${locations[point].name}`;
+          pathSteps.appendChild(li);
+        });
+  
+        document.querySelector(".info-panel").style.display = "block";
+      }
+  
+      function clearRoute() {
+        if (routeLine) {
+          map.removeLayer(routeLine);
+          routeLine = null;
+        }
+  
+        // Reset all markers to default
+        for (const key in markers) {
+          markers[key].setIcon(createMarkerIcon("", key));
+        }
+  
+        // Hide info panel
+        document.querySelector(".info-panel").style.display = "none";
+      }
+  
+      // Expose functions to global scope
+      window.findPath = findPath;
+      window.clearRoute = clearRoute;
+    })
+    .catch(error => {
+      console.error('Error loading data:', error);
+      alert("Failed to load map data. Please try again later.");
+    });
+  </script>  
+</body>
 
 </html>
