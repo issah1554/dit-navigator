@@ -85,10 +85,17 @@
     // Define base layers
     const osmLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19,
     });
     
     const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+      maxZoom: 19,
+    });
+
+    const cartoLightLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      maxZoom: 20,
     });
     
     // Add default layer
@@ -97,7 +104,8 @@
     // Add layer control
     const baseLayers = {
       "Street Map": osmLayer,
-      "Satellite View": satelliteLayer
+      "Satellite View": satelliteLayer,
+      "Carto Light": cartoLightLayer
     };
     
 
@@ -131,7 +139,7 @@
         return L.divIcon({
           className: "marker-icon " + className,
           html: letter,
-          iconSize: [24, 24],
+          iconSize: [12, 12],
         });
       }
   
@@ -141,8 +149,8 @@
         markers[key] = L.marker(loc.latlng, {
           icon: createMarkerIcon("", key),
         }).addTo(map).bindPopup(`
-          <b>${key}: ${loc.name}</b><br>
-          <small>${loc.description}</small>
+          <b class = "location-name">${key}: ${loc.name}</b><br>
+          <small class = "location-description">${loc.description}</small>
         `);
       }
   
