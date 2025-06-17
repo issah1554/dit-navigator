@@ -71,6 +71,33 @@
     "description": "Located on floor ",
     "floor": ""
   },
+  "JCT-6": {
+    "name": "workshop juction",
+    "latlng": [
+      -6.814306,
+      39.280405
+    ],
+    "description": "Located on floor ",
+    "floor": ""
+  },
+  "JCT-7": {
+    "name": "Block 3",
+    "latlng": [
+      -6.813585103031536,
+      39.28042568774609
+    ],
+    "description": "Located on floor ",
+    "floor": ""
+  },
+  "volleyball": {
+    "name": "volleyball court",
+    "latlng": [
+      -6.81363325401973,
+      39.279822148385165
+    ],
+    "description": "Located on floor None",
+    "floor": null
+  },
   "Block-Library": {
     "name": "library",
     "latlng": [
@@ -89,7 +116,7 @@
     "description": "Located on floor G",
     "floor": "G"
   },
-  "Library 1": {
+  "Lib-1": {
     "name": "VENUE-LIB-1",
     "latlng": [
       -6.815115753,
@@ -98,7 +125,7 @@
     "description": "Located on floor G",
     "floor": "G"
   },
-  "Library 2": {
+  "Lib-2": {
     "name": "VENUE-LIB-2",
     "latlng": [
       -6.815115753,
@@ -107,7 +134,7 @@
     "description": "Located on floor 1",
     "floor": "1"
   },
-  "Library 3": {
+  "Lib-3": {
     "name": "VENUE-LIB-3",
     "latlng": [
       -6.815115753,
@@ -124,15 +151,6 @@
     ],
     "description": "Located on floor ",
     "floor": ""
-  },
-  "T10-2": {
-    "name": "VENUE-T10-2",
-    "latlng": [
-      -6.814654508,
-      39.2794655
-    ],
-    "description": "Located on floor 2",
-    "floor": "2"
   },
   "TT-Basement": {
     "name": "VENUE-TT-BASEMENT",
@@ -350,7 +368,7 @@
     "description": "Located on floor 3",
     "floor": "3"
   },
-  "w10": {
+  "W9": {
     "name": "VENUE-W9",
     "latlng": [
       -6.815035035,
@@ -376,15 +394,6 @@
     ],
     "description": "Located on floor ",
     "floor": ""
-  },
-  "W5": {
-    "name": "VENUE-W5",
-    "latlng": [
-      -6.814990674,
-      39.27926814
-    ],
-    "description": "Located on floor 5",
-    "floor": "5"
   },
   "w7": {
     "name": "VENUE-W7",
@@ -566,7 +575,7 @@
     "description": "Located on floor 6",
     "floor": "6"
   },
-  "mawasiliano angani": {
+  "mws": {
     "name": "mawasiliano angani",
     "latlng": [
       -6.814475775,
@@ -629,7 +638,7 @@
     "description": "Located on floor ",
     "floor": ""
   },
-  "Mult. Lab 1": {
+  "Mult": {
     "name": "VENUE-MULT-LAB-1",
     "latlng": [
       -6.814135606,
@@ -818,7 +827,7 @@
     "description": "Located on floor 8",
     "floor": "8"
   },
-  "uwanja wa basket": {
+  "basket": {
     "name": "Basket court",
     "latlng": [
       -6.813092036,
@@ -827,7 +836,7 @@
     "description": "Located on floor ",
     "floor": ""
   },
-  "uwanja wa soccer": {
+  "soccer": {
     "name": "Football pitch",
     "latlng": [
       -6.813533103,
@@ -854,7 +863,7 @@
     "description": "Located on floor ",
     "floor": ""
   },
-  "w17-maintance dept": {
+  "w17": {
     "name": "VENUE-w17-maintance dept",
     "latlng": [
       -6.814213442,
@@ -908,8 +917,8 @@
     "description": "Located on floor 3",
     "floor": "3"
   },
-  "vimbeta vya dh": {
-    "name": "VIMB-DH",
+  "VIMB-DH": {
+    "name": "vimbeta vya dh",
     "latlng": [
       -6.813080505,
       39.28011003
@@ -935,8 +944,8 @@
     "description": "Located on floor ",
     "floor": ""
   },
-  "vimbeta vya Block-C": {
-    "name": "VIMB-C",
+  "VIMB-C": {
+    "name": "vimbeta vya Block-C",
     "latlng": [
       -6.81565824,
       39.28037555
@@ -944,7 +953,7 @@
     "description": "Located on floor ",
     "floor": ""
   },
-  "Electrical Workshop": {
+  "EW": {
     "name": "VENUE-electrical workshop",
     "latlng": [
       -6.815341134,
