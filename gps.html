@@ -1,448 +1,512 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Campus Route Finder</title>
 
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <!-- Leaflet Routing Machine CSS -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <title>Campus Route Finder</title>
 
-    <!-- Bootstrap CSS (v5) -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <!-- Font Awesome for icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <!-- Leaflet Routing Machine CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
 
-  <body>
-    <div id="map"></div>
+  <!-- Bootstrap CSS (v5) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css">
+</head>
 
-    <div class="controls-box">
-      <h5 class="mb-3 text-center">
-        <i class="fas fa-map-marked-alt me-2"></i>Campus Route Finder
-      </h5>
-      <div class="mb-3">
-        <label for="start" class="form-label"
-          ><i class="fas fa-map-marker-alt me-1"></i> Start Location</label
-        >
-        <select id="start" class="form-select">
-          <option value="" disabled selected>Select starting point</option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="end" class="form-label"
-          ><i class="fas fa-flag me-1"></i> Destination</label
-        >
-        <select id="end" class="form-select">
-          <option value="" disabled selected>Select destination</option>
-        </select>
-      </div>
-      <button class="btn btn-primary w-100" onclick="findPath()">
-        <i class="fas fa-route me-2"></i>Find Route
-      </button>
-      <button
-        class="btn btn-outline-secondary w-100 mt-2"
-        onclick="clearRoute()"
-      >
-        <i class="fas fa-times me-2"></i>Clear Route
-      </button>
+<body>
+  <div id="map"></div>
+
+  <div class="controls-box">
+    <h5 class="mb-3 text-center">
+      <i class="fas fa-map-marked-alt me-2"></i>Campus Route Finder
+    </h5>
+    <div class="mb-3">
+      <label for="start" class="form-label"><i class="fas fa-map-marker-alt me-1"></i> Start Location</label>
+      <select id="start" class="form-select">
+        <option value="" disabled selected>Select starting point</option>
+      </select>
     </div>
-
-    <div class="info-panel">
-      <h6 class="mb-2">
-        <i class="fas fa-info-circle me-1"></i> Route Information
-      </h6>
-      <p class="path-info mb-1">
-        <strong>Distance:</strong> <span id="distance">-</span> meters
-      </p>
-      <p class="path-info"><strong>Path:</strong></p>
-      <ol class="path-steps" id="path-steps"></ol>
+    <div class="mb-3">
+      <label for="end" class="form-label"><i class="fas fa-flag me-1"></i> Destination</label>
+      <select id="end" class="form-select">
+        <option value="" disabled selected>Select destination</option>
+      </select>
     </div>
+    <button class="btn btn-primary w-100" onclick="findPath()">
+      <i class="fas fa-route me-2"></i>Find Route
+    </button>
+    <button class="btn btn-outline-secondary w-100 mt-2" onclick="clearRoute()">
+      <i class="fas fa-times me-2"></i>Clear Route
+    </button>
+    <button class="btn btn-primary w-100 mt-2" onclick="showNetwork()">
+      <i class="fas fa-project-diagram me-2"></i>Show Network
+    </button>
+  </div>
 
-    <div class="legend">
-      <div class="legend-item">
-        <div class="legend-color start-icon"></div>
-        <span>Start Point</span>
-      </div>
-      <div class="legend-item">
-        <div class="legend-color end-icon"></div>
-        <span>End Point</span>
-      </div>
-      <div class="legend-item">
-        <div class="legend-color" style="background-color: #4a90e2"></div>
-        <span>Route</span>
-      </div>
+  <div class="info-panel">
+    <h6 class="mb-2">
+      <i class="fas fa-info-circle me-1"></i> Route Information
+    </h6>
+    <p class="path-info mb-1">
+      <strong>Distance:</strong> <span id="distance">-</span> meters
+    </p>
+    <p class="path-info"><strong>Path:</strong></p>
+    <ol class="path-steps" id="path-steps"></ol>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-color start-icon"></div>
+      <span>Start Point</span>
     </div>
+    <div class="legend-item">
+      <div class="legend-color end-icon"></div>
+      <span>End Point</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background-color: #4a90e2"></div>
+      <span>Route</span>
+    </div>
+  </div>
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <!-- Leaflet Routing Machine JS -->
-    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!-- Leaflet Routing Machine JS -->
+  <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 
-    <script>
-      // Initialize map
-      const map = L.map("map", {
-        zoomControl: false,
-      }).setView([-6.814990674368246, 39.27926813534453], 17);
+  <script>
+    // Initialize map
+    const map = L.map("map", {
+      zoomControl: false,
+    }).setView([-6.814990674368246, 39.27926813534453], 17);
 
-      // Define base layers
-      const osmLayer = L.tileLayer(
-        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        {
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-          maxZoom: 19,
+    // Define base layers
+    const osmLayer = L.tileLayer(
+      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19,
+      }
+    );
+
+    const satelliteLayer = L.tileLayer(
+      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+      {
+        attribution:
+          "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
+        maxZoom: 19,
+      }
+    );
+
+    const cartoLightLayer = L.tileLayer(
+      "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+      {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        maxZoom: 20,
+      }
+    );
+
+    // Add default layer
+    osmLayer.addTo(map);
+
+    // Add layer control
+    const baseLayers = {
+      "Street Map": osmLayer,
+      "Satellite View": satelliteLayer,
+      "Carto Light": cartoLightLayer,
+    };
+
+    // Add zoom control
+    L.control
+      .zoom({
+        position: "bottomleft",
+        zoomInText: "+",
+        zoomOutText: "-",
+        zoomInTitle: "Zoom in",
+        zoomOutTitle: "Zoom out",
+      })
+      .addTo(map);
+
+    L.control
+      .layers(baseLayers, null, {
+        position: "bottomleft",
+      })
+      .addTo(map);
+
+    // Load both data files
+    Promise.all([
+      fetch("nodes.json").then((r) => r.json()),
+      fetch("graph.json").then((r) => r.json()),
+    ])
+      .then(([locations, graph]) => {
+        console.log("Data loaded:", { locations, graph });
+
+        let routeLine = null;
+        let markers = {};
+
+        // Custom icon creation function
+        function createMarkerIcon(className, letter) {
+          return L.divIcon({
+            className: "marker-icon " + className,
+            html: letter,
+            iconSize: [12, 12],
+          });
         }
-      );
 
-      const satelliteLayer = L.tileLayer(
-        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-        {
-          attribution:
-            "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
-          maxZoom: 19,
-        }
-      );
-
-      const cartoLightLayer = L.tileLayer(
-        "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
-        {
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-          maxZoom: 20,
-        }
-      );
-
-      // Add default layer
-      osmLayer.addTo(map);
-
-      // Add layer control
-      const baseLayers = {
-        "Street Map": osmLayer,
-        "Satellite View": satelliteLayer,
-        "Carto Light": cartoLightLayer,
-      };
-
-      // Add zoom control
-      L.control
-        .zoom({
-          position: "bottomleft",
-          zoomInText: "+",
-          zoomOutText: "-",
-          zoomInTitle: "Zoom in",
-          zoomOutTitle: "Zoom out",
-        })
-        .addTo(map);
-
-      L.control
-        .layers(baseLayers, null, {
-          position: "bottomleft",
-        })
-        .addTo(map);
-
-      // Load both data files
-      Promise.all([
-        fetch("nodes.json").then((r) => r.json()),
-        fetch("graph.json").then((r) => r.json()),
-      ])
-        .then(([locations, graph]) => {
-          console.log("Data loaded:", { locations, graph });
-
-          let routeLine = null;
-          let markers = {};
-
-          // Custom icon creation function
-          function createMarkerIcon(className, letter) {
-            return L.divIcon({
-              className: "marker-icon " + className,
-              html: letter,
-              iconSize: [12, 12],
-            });
-          }
-
-          // Add markers
-          for (let key in locations) {
-            const loc = locations[key];
-            markers[key] = L.marker(loc.latlng, {
-              icon: createMarkerIcon("", key),
-            }).addTo(map).bindPopup(`
+        // Add markers
+        for (let key in locations) {
+          const loc = locations[key];
+          markers[key] = L.marker(loc.latlng, {
+            icon: createMarkerIcon("", key),
+          }).addTo(map).bindPopup(`
           <b class = "location-name">${key}: ${loc.name}</b><br>
           <small class = "location-description">${loc.description}</small>
         `);
+        }
+
+        // Populate dropdowns
+        const startSelect = document.getElementById("start");
+        const endSelect = document.getElementById("end");
+
+        for (let key in locations) {
+          const loc = locations[key];
+          const option = new Option(`${key} - ${loc.name}`, key);
+          startSelect.add(option);
+          endSelect.add(option.cloneNode(true));
+        }
+
+        // Improved Priority Queue implementation using binary heap
+        class PriorityQueue {
+          constructor(comparator = (a, b) => a < b) {
+            this.heap = [];
+            this.comparator = comparator;
+            this.nodeMap = new Map(); // To track node positions in heap
           }
 
-          // Populate dropdowns
-          const startSelect = document.getElementById("start");
-          const endSelect = document.getElementById("end");
-
-          for (let key in locations) {
-            const loc = locations[key];
-            const option = new Option(`${key} - ${loc.name}`, key);
-            startSelect.add(option);
-            endSelect.add(option.cloneNode(true));
+          enqueue(item, priority) {
+            const node = { item, priority };
+            this.heap.push(node);
+            this.nodeMap.set(item, this.heap.length - 1);
+            this._bubbleUp(this.heap.length - 1);
           }
 
-          // Improved Priority Queue implementation using binary heap
-          class PriorityQueue {
-            constructor(comparator = (a, b) => a < b) {
-              this.heap = [];
-              this.comparator = comparator;
-              this.nodeMap = new Map(); // To track node positions in heap
+          dequeue() {
+            if (this.isEmpty()) return null;
+
+            const root = this.heap[0];
+            const last = this.heap.pop();
+            this.nodeMap.delete(root.item);
+
+            if (this.heap.length > 0) {
+              this.heap[0] = last;
+              this.nodeMap.set(last.item, 0);
+              this._sinkDown(0);
             }
 
-            enqueue(item, priority) {
-              const node = { item, priority };
-              this.heap.push(node);
-              this.nodeMap.set(item, this.heap.length - 1);
-              this._bubbleUp(this.heap.length - 1);
+            return root.item;
+          }
+
+          updatePriority(item, newPriority) {
+            const index = this.nodeMap.get(item);
+            if (index === undefined) return;
+
+            const oldPriority = this.heap[index].priority;
+            this.heap[index].priority = newPriority;
+
+            if (newPriority < oldPriority) {
+              this._bubbleUp(index);
+            } else {
+              this._sinkDown(index);
             }
+          }
 
-            dequeue() {
-              if (this.isEmpty()) return null;
+          _bubbleUp(index) {
+            while (index > 0) {
+              const parentIndex = Math.floor((index - 1) / 2);
+              if (this._compare(parentIndex, index)) break;
+              this._swap(index, parentIndex);
+              index = parentIndex;
+            }
+          }
 
-              const root = this.heap[0];
-              const last = this.heap.pop();
-              this.nodeMap.delete(root.item);
+          _sinkDown(index) {
+            const length = this.heap.length;
+            while (true) {
+              let smallest = index;
+              const left = 2 * index + 1;
+              const right = 2 * index + 2;
 
-              if (this.heap.length > 0) {
-                this.heap[0] = last;
-                this.nodeMap.set(last.item, 0);
-                this._sinkDown(0);
+              if (left < length && this._compare(left, smallest)) {
+                smallest = left;
               }
-
-              return root.item;
-            }
-
-            updatePriority(item, newPriority) {
-              const index = this.nodeMap.get(item);
-              if (index === undefined) return;
-
-              const oldPriority = this.heap[index].priority;
-              this.heap[index].priority = newPriority;
-
-              if (newPriority < oldPriority) {
-                this._bubbleUp(index);
-              } else {
-                this._sinkDown(index);
+              if (right < length && this._compare(right, smallest)) {
+                smallest = right;
               }
+              if (smallest === index) break;
+              this._swap(index, smallest);
+              index = smallest;
             }
+          }
 
-            _bubbleUp(index) {
-              while (index > 0) {
-                const parentIndex = Math.floor((index - 1) / 2);
-                if (this._compare(parentIndex, index)) break;
-                this._swap(index, parentIndex);
-                index = parentIndex;
-              }
-            }
+          _compare(a, b) {
+            return this.comparator(
+              this.heap[a].priority,
+              this.heap[b].priority
+            );
+          }
 
-            _sinkDown(index) {
-              const length = this.heap.length;
-              while (true) {
-                let smallest = index;
-                const left = 2 * index + 1;
-                const right = 2 * index + 2;
+          _swap(a, b) {
+            const temp = this.heap[a];
+            this.heap[a] = this.heap[b];
+            this.heap[b] = temp;
+            this.nodeMap.set(this.heap[a].item, a);
+            this.nodeMap.set(this.heap[b].item, b);
+          }
 
-                if (left < length && this._compare(left, smallest)) {
-                  smallest = left;
-                }
-                if (right < length && this._compare(right, smallest)) {
-                  smallest = right;
-                }
-                if (smallest === index) break;
-                this._swap(index, smallest);
-                index = smallest;
-              }
-            }
+          isEmpty() {
+            return this.heap.length === 0;
+          }
+        }
 
-            _compare(a, b) {
-              return this.comparator(
-                this.heap[a].priority,
-                this.heap[b].priority
+        // Dijkstra's Algorithm with proper priority queue usage
+        function dijkstra(start, end) {
+          console.log(`Finding path from ${start} to ${end}`);
+
+          // Check if start and end exist in graph
+          if (!graph[start] || !graph[end]) {
+            console.error("Start or end node not found in graph");
+            return { path: [], distance: Infinity };
+          }
+
+          const distances = {};
+          const prev = {};
+          const pq = new PriorityQueue((a, b) => a < b);
+
+          // Initialize distances
+          for (const vertex in graph) {
+            distances[vertex] = Infinity;
+            prev[vertex] = null;
+          }
+          distances[start] = 0;
+
+          // Enqueue start node with priority 0
+          pq.enqueue(start, 0);
+
+          while (!pq.isEmpty()) {
+            const u = pq.dequeue();
+            console.log(`Processing ${u}, distance: ${distances[u]}`);
+
+            if (u === end) break; // Found our target
+
+            // Skip if we've already found a better path to u
+            if (distances[u] === Infinity) continue;
+
+            // Explore neighbors
+            for (const neighbor in graph[u]) {
+              const alt = distances[u] + graph[u][neighbor];
+              console.log(
+                `  Neighbor ${neighbor}, current distance: ${distances[neighbor]}, alternative: ${alt}`
               );
-            }
 
-            _swap(a, b) {
-              const temp = this.heap[a];
-              this.heap[a] = this.heap[b];
-              this.heap[b] = temp;
-              this.nodeMap.set(this.heap[a].item, a);
-              this.nodeMap.set(this.heap[b].item, b);
-            }
+              if (alt < distances[neighbor]) {
+                distances[neighbor] = alt;
+                prev[neighbor] = u;
 
-            isEmpty() {
-              return this.heap.length === 0;
-            }
-          }
-
-          // Dijkstra's Algorithm with proper priority queue usage
-          function dijkstra(start, end) {
-            console.log(`Finding path from ${start} to ${end}`);
-
-            // Check if start and end exist in graph
-            if (!graph[start] || !graph[end]) {
-              console.error("Start or end node not found in graph");
-              return { path: [], distance: Infinity };
-            }
-
-            const distances = {};
-            const prev = {};
-            const pq = new PriorityQueue((a, b) => a < b);
-
-            // Initialize distances
-            for (const vertex in graph) {
-              distances[vertex] = Infinity;
-              prev[vertex] = null;
-            }
-            distances[start] = 0;
-
-            // Enqueue start node with priority 0
-            pq.enqueue(start, 0);
-
-            while (!pq.isEmpty()) {
-              const u = pq.dequeue();
-              console.log(`Processing ${u}, distance: ${distances[u]}`);
-
-              if (u === end) break; // Found our target
-
-              // Skip if we've already found a better path to u
-              if (distances[u] === Infinity) continue;
-
-              // Explore neighbors
-              for (const neighbor in graph[u]) {
-                const alt = distances[u] + graph[u][neighbor];
-                console.log(
-                  `  Neighbor ${neighbor}, current distance: ${distances[neighbor]}, alternative: ${alt}`
-                );
-
-                if (alt < distances[neighbor]) {
-                  distances[neighbor] = alt;
-                  prev[neighbor] = u;
-
-                  // Update priority queue
-                  if (pq.nodeMap.has(neighbor)) {
-                    pq.updatePriority(neighbor, alt);
-                  } else {
-                    pq.enqueue(neighbor, alt);
-                  }
-
-                  console.log(
-                    `    Updated ${neighbor} to distance ${alt} via ${u}`
-                  );
+                // Update priority queue
+                if (pq.nodeMap.has(neighbor)) {
+                  pq.updatePriority(neighbor, alt);
+                } else {
+                  pq.enqueue(neighbor, alt);
                 }
+
+                console.log(
+                  `    Updated ${neighbor} to distance ${alt} via ${u}`
+                );
               }
             }
+          }
 
-            // Reconstruct path if one exists
-            const path = [];
-            if (distances[end] !== Infinity) {
-              let u = end;
-              while (u !== null) {
-                path.unshift(u);
-                u = prev[u];
+          // Reconstruct path if one exists
+          const path = [];
+          if (distances[end] !== Infinity) {
+            let u = end;
+            while (u !== null) {
+              path.unshift(u);
+              u = prev[u];
+            }
+          }
+
+          console.log("Final path:", path);
+          console.log("Final distance:", distances[end]);
+
+          return {
+            path: path,
+            distance: distances[end],
+          };
+        }
+
+        function findPath() {
+          const start = startSelect.value;
+          const end = endSelect.value;
+
+          if (!start || !end) {
+            alert("Please select both start and end locations.");
+            return;
+          }
+
+          if (start === end) {
+            alert("Start and end locations must be different.");
+            return;
+          }
+
+          // Clear previous route and markers
+          clearRoute();
+
+          // Calculate path
+          const result = dijkstra(start, end);
+          const path = result.path;
+          const distance = result.distance;
+
+          if (path.length === 0 || distance === Infinity) {
+            alert("No path found between these locations.");
+            return;
+          }
+
+          // Update markers for start and end points
+          markers[start].setIcon(createMarkerIcon("start-icon", start));
+          markers[end].setIcon(createMarkerIcon("end-icon", end));
+
+          // Create polyline from path
+          const coords = path.map((k) => locations[k].latlng);
+          routeLine = L.polyline(coords, {
+            color: "#4a90e2",
+            weight: 5,
+            opacity: 0.8,
+            dashArray: "5, 5",
+            lineJoin: "round",
+          }).addTo(map);
+
+          // Fit bounds to show entire route
+          map.fitBounds(routeLine.getBounds(), { padding: [50, 50] });
+
+          // Show route information
+          document.getElementById("distance").textContent =
+            Math.round(distance);
+          const pathSteps = document.getElementById("path-steps");
+          pathSteps.innerHTML = "";
+
+          path.forEach((point) => {
+            const li = document.createElement("li");
+            li.textContent = `${point} - ${locations[point].name}`;
+            pathSteps.appendChild(li);
+          });
+
+          document.querySelector(".info-panel").style.display = "block";
+        }
+
+        function clearRoute() {
+          if (routeLine) {
+            map.removeLayer(routeLine);
+            routeLine = null;
+          }
+
+          // Reset all markers to default
+          for (const key in markers) {
+            markers[key].setIcon(createMarkerIcon("", key));
+          }
+
+          // Hide info panel
+          document.querySelector(".info-panel").style.display = "none";
+        }
+
+        function showNetwork() {
+          // Clear any existing network display
+          clearNetwork();
+          
+          // Create a feature group to hold all network elements
+          window.networkLayer = L.featureGroup().addTo(map);
+          
+          // Draw all connections from the graph
+          for (const source in graph) {
+              const sourceLocation = locations[source];
+              if (!sourceLocation) continue;
+              
+              for (const target in graph[source]) {
+                  const targetLocation = locations[target];
+                  if (!targetLocation) continue;
+                  
+                  // Create a line for this connection
+                  const line = L.polyline(
+                      [sourceLocation.latlng, targetLocation.latlng], 
+                      {
+                          color: '#888',
+                          weight: 2,
+                          opacity: 0.6,
+                          dashArray: '3, 3'
+                      }
+                  ).addTo(window.networkLayer);
+                  
+                  // Add distance label at midpoint
+                  const midpoint = line.getCenter();
+                  const distance = graph[source][target];
+                  
+                  L.marker(midpoint, {
+                      icon: L.divIcon({
+                          className: 'network-distance-label',
+                          html: `${distance}m`,
+                          iconSize: [40, 20]
+                      }),
+                      zIndexOffset: -1000,
+                      interactive: false
+                  }).addTo(window.networkLayer);
               }
-            }
-
-            console.log("Final path:", path);
-            console.log("Final distance:", distances[end]);
-
-            return {
-              path: path,
-              distance: distances[end],
-            };
           }
-          function findPath() {
-            const start = startSelect.value;
-            const end = endSelect.value;
-
-            if (!start || !end) {
-              alert("Please select both start and end locations.");
-              return;
-            }
-
-            if (start === end) {
-              alert("Start and end locations must be different.");
-              return;
-            }
-
-            // Clear previous route and markers
-            clearRoute();
-
-            // Calculate path
-            const result = dijkstra(start, end);
-            const path = result.path;
-            const distance = result.distance;
-
-            if (path.length === 0 || distance === Infinity) {
-              alert("No path found between these locations.");
-              return;
-            }
-
-            // Update markers for start and end points
-            markers[start].setIcon(createMarkerIcon("start-icon", start));
-            markers[end].setIcon(createMarkerIcon("end-icon", end));
-
-            // Create polyline from path
-            const coords = path.map((k) => locations[k].latlng);
-            routeLine = L.polyline(coords, {
-              color: "#4a90e2",
-              weight: 5,
-              opacity: 0.8,
-              dashArray: "5, 5",
-              lineJoin: "round",
-            }).addTo(map);
-
-            // Fit bounds to show entire route
-            map.fitBounds(routeLine.getBounds(), { padding: [50, 50] });
-
-            // Show route information
-            document.getElementById("distance").textContent = Math.round(distance);
-            const pathSteps = document.getElementById("path-steps");
-            pathSteps.innerHTML = "";
-
-            path.forEach((point) => {
-              const li = document.createElement("li");
-              li.textContent = `${point} - ${locations[point].name}`;
-              pathSteps.appendChild(li);
-            });
-
-            document.querySelector(".info-panel").style.display = "block";
+          
+          // Fit the map to show the entire network
+          map.fitBounds(window.networkLayer.getBounds(), { padding: [50, 50] });
+          
+          // Add button to clear network
+          if (!window.clearNetworkBtn) {
+              window.clearNetworkBtn = L.control({position: 'topright'});
+              window.clearNetworkBtn.onAdd = function() {
+                  const div = L.DomUtil.create('div', 'clear-network-btn');
+                  div.innerHTML = `<button class="btn btn-sm btn-danger" onclick="clearNetwork()">
+                      <i class="fas fa-times"></i> Hide Network
+                  </button>`;
+                  return div;
+              };
+              window.clearNetworkBtn.addTo(map);
           }
+        }
 
-          function clearRoute() {
-            if (routeLine) {
-              map.removeLayer(routeLine);
-              routeLine = null;
+        function clearNetwork() {
+            if (window.networkLayer) {
+                map.removeLayer(window.networkLayer);
+                window.networkLayer = null;
             }
-
-            // Reset all markers to default
-            for (const key in markers) {
-              markers[key].setIcon(createMarkerIcon("", key));
+            if (window.clearNetworkBtn) {
+                map.removeControl(window.clearNetworkBtn);
+                window.clearNetworkBtn = null;
             }
+        }
 
-            // Hide info panel
-            document.querySelector(".info-panel").style.display = "none";
-          }
+        // Expose functions to global scope
+        window.findPath = findPath;
+        window.clearRoute = clearRoute;
+        window.showNetwork = showNetwork;
+        window.clearNetwork = clearNetwork;
+      })
+      .catch((error) => {
+        console.error("Error loading data:", error);
+        alert("Failed to load map data. Please try again later.");
+      });
+  </script>
+</body>
 
-          // Expose functions to global scope
-          window.findPath = findPath;
-          window.clearRoute = clearRoute;
-        })
-        .catch((error) => {
-          console.error("Error loading data:", error);
-          alert("Failed to load map data. Please try again later.");
-        });
-    </script>
-  </body>
 </html>
