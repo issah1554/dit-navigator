@@ -500,7 +500,7 @@
 
           // Add button to clear network
           if (!window.clearNetworkBtn) {
-            window.clearNetworkBtn = L.control({ position: 'topright' });
+            window.clearNetworkBtn = L.control({ position: 'bottomleft' });
             window.clearNetworkBtn.onAdd = function () {
               const div = L.DomUtil.create('div', 'clear-network-btn');
               div.innerHTML = `<button class="btn btn-sm btn-danger" onclick="clearNetwork()">
